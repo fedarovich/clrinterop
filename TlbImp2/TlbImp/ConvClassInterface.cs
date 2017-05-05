@@ -39,13 +39,15 @@ namespace tlbimp2
             TypeInfo coclassTypeInfo,
             TypeInfo defaultInterfaceTypeInfo,
             TypeInfo defaultSourceInterfaceTypeInfo,
-            bool isExclusive)
+            bool isExclusive,
+            bool preserveInterfaces)
         {
             m_info = info;
             m_coclassTypeInfo = coclassTypeInfo;
             m_defaultInterfaceTypeInfo = defaultInterfaceTypeInfo;
             m_defaultSourceInterfaceTypeInfo = defaultSourceInterfaceTypeInfo;
             m_isExclusive = isExclusive;
+            m_preserveInterfaces = preserveInterfaces;
 
             DefineType(info, m_coclassTypeInfo, false);
         }
@@ -127,7 +129,7 @@ namespace tlbimp2
                 {
                     libIdOfCoclass = libAttr.guid;
                 }
-                if (libIdOfDefaultInterface.Equals(libIdOfCoclass))
+                if (libIdOfDefaultInterface.Equals(libIdOfCoclass) && !m_preserveInterfaces)
                 {
                     m_convInterface.AssociateWithExclusiveClassInterface(this as IConvClassInterface);
                 }
@@ -231,7 +233,8 @@ namespace tlbimp2
         private IConvInterface m_convSourceInterface;               // IConvInterface for the default source interface
 
         private bool m_isExclusive;                                 // see IConvClassInterface.IsExclusive for details
-  
+        private readonly bool m_preserveInterfaces;
+
         #endregion
     }
 

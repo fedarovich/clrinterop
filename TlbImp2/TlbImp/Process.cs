@@ -225,7 +225,7 @@ namespace tlbimp2
         /// <summary>
         /// Create local class interfaces
         /// </summary>
-        public void CreateLocalClassInterfaces(ConverterInfo converterInfo)
+        public void CreateLocalClassInterfaces(ConverterInfo converterInfo, bool preserveInterfaces)
         {
             // Walk the candidate list and generate class interfaces
             // Note: We need to create the class interface in two phases because
@@ -246,7 +246,8 @@ namespace tlbimp2
                         info.coclass,
                         info.defaultInterface,
                         info.defaultSourceInterface,
-                        info.isExclusive);
+                        info.isExclusive,
+                        preserveInterfaces);
                     convClassInterfaceLocals.Add(local);
                 }
                 catch (ReflectionTypeLoadException)
@@ -365,23 +366,12 @@ namespace tlbimp2
         /// <summary>
         /// Create class interfaces for the specified type library
         /// </summary>
-        private void CreateClassInterfaces()
+        private void CreateClassInterfaces(bool preserveInterfaces)
         {
-            m_converterInfo.GetClassInterfaceMap().CreateLocalClassInterfaces(m_converterInfo);    
+            m_converterInfo.GetClassInterfaceMap().CreateLocalClassInterfaces(m_converterInfo, preserveInterfaces);    
         }
 
-        public AssemblyBuilder DoProcess(
-            Object typeLib,
-            string asmFilename,
-            TypeLibImporterFlags flags,
-            ITypeLibImporterNotifySink notifySink,
-            byte[] publicKey,
-            StrongNameKeyPair keyPair,
-            string asmNamespace,
-            Version asmVersion,
-            bool isVersion2,
-            bool isPreserveSig,
-            string ruleSetFileName)
+        public AssemblyBuilder DoProcess(object typeLib, string asmFilename, TypeLibImporterFlags flags, ITypeLibImporterNotifySink notifySink, byte[] publicKey, StrongNameKeyPair keyPair, string asmNamespace, Version asmVersion, bool isVersion2, bool isPreserveSig, string ruleSetFileName, bool preserveInterfaces)
         {
             m_resolver = notifySink;
 
@@ -511,7 +501,7 @@ namespace tlbimp2
             //
             if (m_converterInfo.GenerateClassInterfaces)
             {
-                CreateClassInterfaces();
+                CreateClassInterfaces(preserveInterfaces);
             }
 
             //

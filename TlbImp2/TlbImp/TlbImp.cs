@@ -264,7 +264,8 @@ internal class TlbImp
                                s_Options.m_strTrademark,
                                s_Options.m_isVersion2,
                                s_Options.m_isPreserveSig,
-                               s_Options.m_ruleSetFileName);
+                               s_Options.m_ruleSetFileName,
+                               s_Options.m_preserveInterfaces);
 
         // Unload the app domain now that we've finished the import.
         AppDomain.Unload(domain);
@@ -302,7 +303,8 @@ internal class TlbImp
                                                         "unsafe", "nologo", "silent", "verbose", "+strictref", "primary", "*namespace", 
                                                         "*asmversion", "sysarray", "*transform", "?", "help", "*tlbreference",
                                                         "noclassmembers", "*machine", "*silence", "*product", "*productversion", 
-                                                        "*company", "*copyright", "*trademark", "v2", "preservesig", "*config" });
+                                                        "*company", "*copyright", "*trademark", "v2", "preservesig", "*config",
+                                                        "preserveinterfaces"});
 
         // Make sure there is at least one argument.
         if ((cmdLine.NumArgs + cmdLine.NumOpts) < 1)
@@ -587,6 +589,10 @@ internal class TlbImp
             else if (opt.Name.Equals("config"))
             {
                 Options.m_ruleSetFileName = opt.Value;
+            }
+            else if (opt.Name.Equals("preserveinterfaces"))
+            {
+                Options.m_preserveInterfaces = true;
             }
         }
 

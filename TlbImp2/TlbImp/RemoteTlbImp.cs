@@ -42,7 +42,8 @@ public class RemoteTlbImp : MarshalByRefObject
                    String               strTrademark,
                    bool                 isVersion2,
                    bool                 isPreserveSig,
-                   String               ruleSetFileName)
+                   String               ruleSetFileName,
+                   bool                 preserveInterfaces)
     {
 
         TlbImpOptions options = new TlbImpOptions();
@@ -71,6 +72,7 @@ public class RemoteTlbImp : MarshalByRefObject
         options.m_isVersion2 = isVersion2;
         options.m_isPreserveSig = isPreserveSig;
         options.m_ruleSetFileName = ruleSetFileName;
+        options.m_preserveInterfaces = preserveInterfaces;
         
         return TlbImpCode.Run(options);
     }

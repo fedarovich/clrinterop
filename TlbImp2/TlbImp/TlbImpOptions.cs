@@ -44,6 +44,7 @@ public sealed class TlbImpOptions
     public bool                 m_isVersion2 = false;
     public bool                 m_isPreserveSig = false;
     public String               m_ruleSetFileName = null;
+    public bool                 m_preserveInterfaces = false;
 }
 
 }

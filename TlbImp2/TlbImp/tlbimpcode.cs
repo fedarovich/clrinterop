@@ -218,7 +218,7 @@ public class TlbImpCode
                 AssemblyBuilder AsmBldr = DoImport(TypeLib, s_Options.m_strAssemblyName, s_Options.m_strAssemblyNamespace,
                     s_Options.m_AssemblyVersion, s_Options.m_aPublicKey, s_Options.m_sKeyPair, s_Options.m_strProduct,
                     s_Options.m_strProductVersion, s_Options.m_strCompany, s_Options.m_strCopyright, s_Options.m_strTrademark,
-                    s_Options.m_flags, s_Options.m_isVersion2, s_Options.m_isPreserveSig, s_Options.m_ruleSetFileName);
+                    s_Options.m_flags, s_Options.m_isVersion2, s_Options.m_isPreserveSig, s_Options.m_ruleSetFileName, s_Options.m_preserveInterfaces);
                 if (AsmBldr == null)
                     return ErrorReturnCode;
             }
@@ -595,7 +595,8 @@ public class TlbImpCode
                                            TypeLibImporterFlags flags,
                                            bool isVersion2,
                                            bool isPreserveSig,
-                                           String ruleSetFileName)
+                                           String ruleSetFileName,
+                                           bool preserveInterfaces)
     {
         // Detemine the assembly file name.
         String asmFileName = Path.GetFileName(strAssemblyFileName);
@@ -628,7 +629,8 @@ public class TlbImpCode
             asmVersion,
             isVersion2,
             isPreserveSig,
-            ruleSetFileName);
+            ruleSetFileName,
+            preserveInterfaces);
 
         if (AsmBldr == null) return null;
 
@@ -1061,7 +1063,8 @@ internal class ImporterCallback : ITypeLibImporterNotifySink
                                     TlbImpCode.s_Options.m_flags,
                                     TlbImpCode.s_Options.m_isVersion2,
                                     TlbImpCode.s_Options.m_isPreserveSig,
-                                    TlbImpCode.s_Options.m_ruleSetFileName);
+                                    TlbImpCode.s_Options.m_ruleSetFileName,
+                                    TlbImpCode.s_Options.m_preserveInterfaces);
             
             // The import could fail. In this case, 
             if (rslt == null) return null;
